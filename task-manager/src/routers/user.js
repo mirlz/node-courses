@@ -12,14 +12,6 @@ router.post('/users', async(req, res) => {
     } catch (err) {
         res.status(400).send();
     }
-
-    // user.save().then(() => {
-    //     res.status(201).send(user);
-    // }).catch(err => {
-    //     res.status(400);
-    //     res.send(err);
-    // })
-
 });
 
 router.post('/users/login', async(req, res) => {
@@ -38,11 +30,6 @@ router.get('/users', async(req, res) => {
     } catch (err) {
         res.status(400).send();
     }
-    // User.find({}).then((users) => {
-    //     res.send(users);
-    // }).catch(err => {
-    //     res.status(500).send();
-    // });
 });
 
 router.get('/users/:id', async(req, res) => {
@@ -57,15 +44,6 @@ router.get('/users/:id', async(req, res) => {
     } catch(e) {
         res.status(500).send();
     }
-    // User.findById(id).then((user) => {
-    //     if(!user) {
-    //         return res.status(404).send();
-    //     }
-
-    //     res.send(user);
-    // }).catch(err => {
-    //     res.status(500).send(err);
-    // });
 });
 
 router.patch('/users/:id', async(req, res) => {

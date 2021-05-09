@@ -12,12 +12,6 @@ router.post('/task', async(req, res) => {
     } catch (e) {
         res.status(400).send(e);
     }
-    // task.save().then(() => {
-    //     res.status(201).send(task);
-    // }).catch(err => {
-    //     res.status(400);
-    //     res.send(err);
-    // })
 });
 
 router.get('/tasks', async(req, res) => {
@@ -27,11 +21,6 @@ router.get('/tasks', async(req, res) => {
     } catch (e) {
         res.status(500).send();
     }
-    // Task.find({}).then((tasks) => {
-    //     res.status(201).send(tasks);
-    // }).catch(err => {
-    //     res.status(500).send();
-    // });
 });
 
 router.get('/task/:id', async(req, res) => {
@@ -46,14 +35,6 @@ router.get('/task/:id', async(req, res) => {
     } catch(e) {
         res.status(500).send();
     }
-    // Task.findById(id).then((task) => {
-    //     if(!task) {
-    //         res.status(404).send();
-    //     }
-    //     res.send(task);
-    // }).catch((err) => {
-    //     res.status(500).send();
-    // });
 });
 
 router.patch('/task/:id', async(req, res) => {
