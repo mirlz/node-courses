@@ -69,10 +69,17 @@ router.patch('/task/:id', async(req, res) => {
     }
 
     try {
-        const task = await Task.findByIdAndUpdate(id, req.body, { returnOriginal: false, runValidators: true });
+        // const task = await Task.findByIdAndUpdate(id, req.body, { returnOriginal: false, runValidators: true });
+        const task = await Task.findById(id);
         if(!task) {
             return res.status(404).send();
         }
+        bodyParams.forEach(bodyParam => {
+            task[bodyParam] = req.body[bodyParam];
+        });
+
+        await task.save();
+        
         return res.status(200).send(task);
     } catch (e) {
         res.status(400).send(e);
@@ -83,7 +90,7 @@ router.delete('/task/:id', async(req, res) => {
     const id = req.params.id;
 
     try {
-        const task = await Task.findByIdAndDelete(id);
+        const task = await Task.findOneAndDelete(id);
         if(!task) {
             return res.status(404).send(task);
         }
