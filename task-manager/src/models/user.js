@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -38,7 +39,13 @@ const userSchema = new mongoose.Schema({
                 throw new Error('Password should not contain the term \'password\'!');
             }
         }
-    }
+    },
+    tokens: [{
+        token: {
+            type: String,
+            required: true
+        }
+    }]
 });
 
 userSchema.statics.findByCredentials = async(email, password) => {
@@ -57,6 +64,26 @@ userSchema.statics.findByCredentials = async(email, password) => {
 
     return user;
 };
+
+userSchema.methods.generateAuthToken = async function() {
+    const user = this;
+    const token = jwt.sign({ _id: user._id.toString() }, 'thisismynewcourse');
+
+    user.tokens = user.tokens.concat({ token });
+    await user.save();
+
+    return token;
+};
+
+userSchema.methods.toJSON = function() {
+    const user = this;
+    const userObj = user.toObject();
+
+    delete userObj.password; 
+    delete userObj.tokens;
+
+    return userObj;
+}
 
 // hash plain text password befor saving
 userSchema.pre('save', async function(next) {
